@@ -140,43 +140,22 @@ int fatorBalanceamento(NO* no) {
     return alturaNo(no->esq) - alturaNo(no->dir);
 }
 
-NO* girarDireita(NO* y) {  
-   /* Rotação simples à direita  
-             y                x  
-            / \              / \  
-           x   T3   =>      T1  y  
-          / \                  / \  
-        T1  T2               T2  T3  
-   */  
+NO* girarDireita(NO* y) {
+    NO* x = y->esq;
+    y->esq = x->dir;
+    x->dir = y;
+    y->altura = maior(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    x->altura = maior(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+    return x;
+}
 
-   // Passo 1: Armazene o filho esquerdo de 'y' em uma variável temporária 'x'.  
-   // Passo 2: Transfira a subárvore direita de 'x' para a subárvore esquerda de 'y'.  
-   // Passo 3: Atualize 'x' para ser o novo nó raiz da subárvore.  
-   // Passo 4: Recalcule as alturas dos nós afetados.  
-   // Passo 5: Retorne o novo nó raiz ('x').  
-
-	// provisoriamente retorna o ponteiro passado como parâmetro
-	return y; 
-}  
-
-NO* girarEsquerda(NO* x) {  
-   /* Rotação simples à esquerda  
-           x                    y  
-          / \                  / \  
-         T1  y      =>        x  T3  
-            / \              / \  
-           T2 T3            T1 T2  
-   */  
-
-   // Passo 1: Armazene o filho direito de 'x' em uma variável temporária 'y'.  
-   // Passo 2: Transfira a subárvore esquerda de 'y' para a subárvore direita de 'x'.  
-   // Passo 3: Atualize 'y' para ser o novo nó raiz da subárvore.  
-   // Passo 4: Recalcule as alturas dos nós afetados.  
-   // Passo 5: Retorne o novo nó raiz ('y').  
-
-
-    // provisoriamente retorna o ponteiro passado como parâmetro
-    return x; 
+NO* girarEsquerda(NO* x) {
+    NO* y = x->dir;
+    x->dir = y->esq;
+    y->esq = x;
+    x->altura = maior(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+    y->altura = maior(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    return y;
 }
 
 NO* insereArvore(NO* no, int valor) {
